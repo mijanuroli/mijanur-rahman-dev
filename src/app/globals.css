@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────
+   DESIGN TOKENS
+   Light: clean white page, subtle cards, indigo primary
+   Dark:  near-black page, elevated dark-blue cards
+───────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --background:           220 20% 98%;
+    --foreground:           222 47% 11%;
+    --primary:              239 84% 63%;
+    --primary-foreground:   0 0% 100%;
+    --muted:                220 14% 94%;
+    --muted-foreground:     220 9% 46%;
+    --border:               220 13% 88%;
+    --surface:              0 0% 100%;
+    --surface-2:            220 20% 96%;
+    --card:                 0 0% 100%;
+    --card-foreground:      222 47% 11%;
+    --radius:               0.625rem;
+  }
+
+  /* Dark theme is default */
+  .dark {
+    --background:           224 71% 4%;
+    --foreground:           213 31% 91%;
+    --primary:              239 84% 67%;
+    --primary-foreground:   0 0% 100%;
+    --muted:                223 47% 11%;
+    --muted-foreground:     215 20% 60%;
+    --border:               216 34% 17%;
+    --surface:              222 47% 6%;
+    --surface-2:            222 47% 10%;
+    --card:                 222 47% 6%;
+    --card-foreground:      213 31% 91%;
+  }
+
+  /* System theme support */
+  @media (prefers-color-scheme: light) {
+    .system-theme {
+      --background:           220 20% 98%;
+      --foreground:           222 47% 11%;
+      --primary:              239 84% 63%;
+      --primary-foreground:   0 0% 100%;
+      --muted:                220 14% 94%;
+      --muted-foreground:     220 9% 46%;
+      --border:               220 13% 88%;
+      --surface:              0 0% 100%;
+      --surface-2:            220 20% 96%;
+      --card:                 0 0% 100%;
+      --card-foreground:      222 47% 11%;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .system-theme {
+      --background:           224 71% 4%;
+      --foreground:           213 31% 91%;
+      --primary:              239 84% 67%;
+      --primary-foreground:   0 0% 100%;
+      --muted:                223 47% 11%;
+      --muted-foreground:     215 20% 60%;
+      --border:               216 34% 17%;
+      --surface:              222 47% 6%;
+      --surface-2:            222 47% 10%;
+      --card:                 222 47% 6%;
+      --card-foreground:      213 31% 91%;
+    }
+  }
+}
+
+@layer base {
+  * { 
+    @apply border-border; 
+    box-sizing: border-box; 
+  }
+  
+  html { 
+    scroll-behavior: smooth; 
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  button { 
+    cursor: pointer; 
+  }
+
+  /* Remove all shadows */
+  * {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+
+  /* Prevent hydration warnings from browser extensions */
+  [fdprocessedid] {
+    /* Ignore browser extension attributes */
+  }
+}
+
+@layer components {
+
+  /* ── Glass ── */
+  .glass {
+    background: hsl(var(--surface) / 0.85);
+    @apply backdrop-blur-xl border border-border/60;
+  }
+
+  .glass-strong {
+    background: hsl(var(--surface) / 0.95);
+    @apply backdrop-blur-2xl border border-border/80;
+  }
+
+  /* ── Badge ── */
+  .badge {
+    @apply font-mono text-[0.6rem] tracking-[0.12em] uppercase px-3 py-1.5
+           inline-flex items-center gap-1.5;
+    border-radius: 3px;
+  }
+  .badge-primary {
+    @apply border border-primary/20 bg-primary/10 text-primary/90;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply font-mono text-xs tracking-[0.1em] uppercase px-5 py-2.5 rounded-lg
+           bg-primary text-primary-foreground
+           hover:bg-primary/90 active:scale-[0.98]
+           transition-all duration-150 font-medium;
+  }
+  .btn-ghost {
+    @apply font-mono text-xs tracking-[0.1em] uppercase px-5 py-2.5 rounded-lg
+           border border-border bg-transparent
+           hover:border-primary/40 hover:text-primary hover:bg-primary/5
+           transition-all duration-150;
+  }
+
+  /* ── Cards — visible in both light + dark ── */
+  .card {
+    background: hsl(var(--card));
+    @apply border border-border/80 rounded-xl transition-all duration-300;
+  }
+  .card:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Profile card — no shadow, clean */
+  .profile-card {
+    background: hsl(var(--card));
+    @apply border border-border/80 rounded-xl transition-all duration-300;
+  }
+  .profile-card:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Project card — same as card */
+  .project-card {
+    background: hsl(var(--card));
+    @apply border border-border/80 rounded-xl transition-all duration-300;
+  }
+  .project-card:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* ── Typography ── */
+  .font-heading {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 700;
+  }
+  .section-label {
+    @apply font-mono text-[0.6rem] tracking-[0.22em] uppercase text-primary/70;
+  }
+  .tag {
+    @apply font-mono text-[0.58rem] tracking-[0.1em] uppercase
+           px-2 py-0.5 rounded
+           bg-primary/10 border border-primary/20 text-primary/80 font-medium;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-br from-indigo-500 via-primary to-violet-500 bg-clip-text text-transparent;
+  }
+
+  /* ── Patterns ── */
+  .cross-pattern {
+    background-image:
+      linear-gradient(hsl(var(--primary) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .dot-pattern {
+    background-image: radial-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* ── Dividers ── */
+  .divider-h {
+    @apply h-px;
+    background: linear-gradient(to right, transparent, hsl(var(--primary) / 0.3), transparent);
+  }
+
+  /* ── Watermark ── */
+  .watermark-text {
+    @apply font-heading text-8xl font-extrabold leading-none select-none pointer-events-none;
+    color: hsl(var(--primary) / 0.04);
+  }
+  .dark .watermark-text {
+    color: hsl(var(--primary) / 0.06);
+  }
+
+  /* ── Input fields ── */
+  .field-input {
+    @apply w-full px-4 py-3 rounded-lg border border-border
+           bg-[hsl(var(--surface-2))] text-foreground text-sm font-light
+           placeholder:text-muted-foreground/50
+           focus:border-primary/50 focus:bg-[hsl(var(--surface))]
+           outline-none transition-all duration-200;
+  }
+
+  /* ── Stat value ── */
+  .stat-value {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    line-height: 1;
+    @apply bg-gradient-to-br from-foreground via-foreground/80 to-primary/80 bg-clip-text text-transparent;
+  }
+
+  /* ── No shadow card override ── */
+  .no-shadow-card {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+}
+
+@layer utilities {
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+  .animation-delay-700 { animation-delay: 700ms; }
+  .animation-delay-800 { animation-delay: 800ms; }
+}
+
+/* ── Keyframes ── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-left {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes slow-drift {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33%       { transform: translateY(-12px) translateX(6px); }
+  66%       { transform: translateY(7px) translateX(-5px); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in      { animation: fade-in 0.5s ease both; }
+.animate-fade-in-left { animation: fade-in-left 0.5s ease both; }
+.animate-blink        { animation: blink 1s step-end infinite; }
+.animate-float        { animation: float 4s ease-in-out infinite; }
+.animate-marquee      { animation: marquee 30s linear infinite; }
+.animate-slow-drift   { animation: slow-drift 20s ease-in-out infinite; }
+.animate-scale-in     { animation: scale-in 0.3s ease both; }
+.animate-slide-in     { animation: slide-in 0.4s ease both; }
+
+/* ── Smooth Theme Transitions ── */
+
+/* Base transition for all elements */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Buttons and interactive elements - faster */
+button,
+a,
+.btn-primary,
+.btn-ghost {
+  transition-duration: 120ms;
+}
+
+/* Cards - slower for smooth lift effect */
+.card,
+.project-card,
+.profile-card {
+  transition: border-color 150ms ease,
+              transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Theme toggle specific - instant visual feedback */
+.theme-toggle-icon {
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 150ms ease;
+}
+
+/* Prevent flash on load - dark is default */
+html {
+  background-color: hsl(var(--background));
+  color-scheme: dark;
+}
+
+html.dark {
+  background-color: hsl(var(--background));
+  color-scheme: dark;
+}
+
+html.light {
+  background-color: hsl(var(--background));
+  color-scheme: light;
+}
+
+/* System theme support */
+html.system-theme {
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: light) {
+  html.system-theme {
+    color-scheme: light;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html.system-theme {
+    color-scheme: dark;
+  }
+}
+
+/* Ensure smooth theme switching for backgrounds and borders */
+.bg-background,
+.bg-surface,
+.bg-surface-2,
+.bg-card,
+.border-border {
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+/* ── Scrollbar styling ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--surface));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
+}
+
+/* ── Selection ── */
+::selection {
+  background: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+
+/* ── Focus visible ── */
+:focus-visible {
+  outline: 2px solid hsl(var(--primary) / 0.5);
+  outline-offset: 2px;
+}
